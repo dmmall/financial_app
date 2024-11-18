@@ -1,0 +1,8 @@
+<% if @transaction.is_a?(Transaction) %>
+  <%= turbo_stream.prepend "transactions", partial: "transactions/transaction", locals: { transaction: @transaction } %>
+  <%= turbo_stream.replace "form", partial: "form", locals: { transaction: Transaction.new, wallets: @wallets } %>
+  <%= turbo_stream.update "flash", partial: "shared/flash", locals: { notice: "Transaction was successfully created." } %>
+<% else %>
+  <%= turbo_stream.replace "form", partial: "form", locals: { transaction: Transaction.new } %>
+  <%= turbo_stream.update "flash", partial: "shared/flash", locals: { alert: @alert } %>
+<% end %>

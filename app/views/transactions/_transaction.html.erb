@@ -1,0 +1,33 @@
+<div id="transaction_<%= transaction.id %>" class="transaction-card">
+  <div class="transaction-details">
+    <p>
+      <strong>To:</strong>
+      <%= transaction.recipient_wallet.user.email %><br>
+      <strong>Amount:</strong>
+      <%= number_to_currency(transaction.amount) %><br>
+      <strong>Status:</strong>
+      <%= transaction.status.humanize %><br>
+      <strong>Type:</strong>
+      <%= transaction.transaction_type.humanize %><br>
+      <% if transaction.execution_date %>
+        <strong>Execution date:</strong>
+        <%= l(transaction.execution_date, format: :long) %>
+        <br>
+      <% end %>
+    </p>
+  </div>
+
+  <div class="transaction-actions">
+    <% if transaction.can_be_canceled? %>
+      <%= button_to cancel_transaction_path(transaction),
+                    method: :post,
+                    class: "btn btn-danger btn-sm",
+                    data: { 
+                      turbo_confirm: 'Are you sure you want to delete this transaction?',
+                      turbo_frame: "transaction_#{transaction.id}"
+                    } do %>
+        <%= 'Cancel' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

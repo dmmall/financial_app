@@ -1,0 +1,7 @@
+<h1>Transactions</h1>
+
+<%= render 'form', transaction: @transaction %>
+
+<div id="transactions">
+  <%= render partial: "transactions/transaction", collection: @transactions %>
+</div>

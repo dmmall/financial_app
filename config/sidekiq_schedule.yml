@@ -1,0 +1,5 @@
+scheduled_transactions_processor:
+  cron: '0 * * * *'
+  class: 'ScheduledTransactionsWorker'
+  queue: default
+  description: "Process scheduled transactions that are ready for execution"

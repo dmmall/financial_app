@@ -1,0 +1,13 @@
+en:
+  activemodel:
+    errors:
+      models:
+        transaction_form:
+          attributes:
+            base:
+              same_wallet: "Sender and recipient wallets cannot be the same"
+              different_currencies: "All wallets must use the same currency"
+            amount:
+              insufficient_funds: "Insufficient funds in sender's wallet"
+            execution_date:
+              must_be_future: "must be in the future"

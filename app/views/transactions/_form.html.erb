@@ -1,0 +1,43 @@
+<%= turbo_frame_tag "form" do %>
+  <%= form_with(model: transaction, local: false, data: { controller: "transaction-form" }) do |form| %>
+    <% if transaction.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+        <ul>
+          <% transaction.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :recipient_wallet_id, "Recipient" %><br>
+      <%= form.collection_select :recipient_wallet_id, @wallets, :id, :display_name, prompt: "Select a User" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :amount %><br>
+      <%= form.number_field :amount, step: 0.01 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :transaction_type %><br>
+      <%= form.select :transaction_type, TransactionDecorator.transaction_type_options,
+        { prompt: "Select type" },{ data: {
+        action: "change->transaction-form#change",
+        transaction_form_target: "transactionType" 
+      } } %>
+    </div>
+
+    <div class="field execution_date_field" style="display: none;" data-transaction-form-target="executionDateField">
+      <%= form.label :execution_date %><br>
+      <%= form.date_field :execution_date %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Transfer" %>
+    </div>
+  <% end %>
+<% end %>
